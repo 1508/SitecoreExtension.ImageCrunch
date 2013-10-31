@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Pipelines.Attach;
 using Sitecore.Resources.Media;
 using SitecoreExtension.ImageCrunch.SmushIt.Entities;
@@ -12,7 +13,14 @@ namespace SitecoreExtension.ImageCrunch.Pipelines
         {
             MediaItem mediaItem = args.MediaItem;
 
-            CrunchImage.ProcessMediaItem(mediaItem);
+            try
+            {
+                CrunchImage.ProcessMediaItem(mediaItem);
+            }
+            catch (System.Exception exception)
+            {
+                Log.Error(string.Format("Could not shrink item {0}", mediaItem.InnerItem.Paths.FullPath), exception, this);
+            }
 
         }
     }

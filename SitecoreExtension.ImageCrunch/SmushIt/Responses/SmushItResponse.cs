@@ -7,6 +7,10 @@ namespace SitecoreExtension.ImageCrunch.SmushIt.Responses
     {
         //{"src":"3b5f6540%2Fwoo","src_size":139906,"dest":"http:\/\/ysmushit.zenfs.com\/results\/3b5f6540%2Fsmush%2Fwoo.jpg","dest_size":131544,"percent":"5.98","id":""}
 
+        //No savings
+        //{\"src\":\"41b6ef0a%2Fempty\",\"src_size\":285210,\"error\":\"No savings\",\"dest_size\":-1,\"id\":\"\"}
+
+
         [DataMember(Name = "src")]
         public string Src { get; set; }
 

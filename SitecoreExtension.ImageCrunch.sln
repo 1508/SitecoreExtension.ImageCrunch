@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.20623.1 VSUPREVIEW
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitecoreExtension.ImageCrunch", "SitecoreExtension.ImageCrunch\SitecoreExtension.ImageCrunch.csproj", "{118E8E69-0638-4653-8AB4-D7553C2E5FA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitecoreExtension.ImageCrunch.SmushIt.Tests", "SitecoreExtension.ImageCrunch.SmushIt.Tests\SitecoreExtension.ImageCrunch.SmushIt.Tests.csproj", "{43AF225E-E08A-4214-A25B-3E39A036A6CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitecoreExtension.ImageCrunch.App", "SitecoreExtension.ImageCrunch.App\SitecoreExtension.ImageCrunch.App.csproj", "{0BE11A3D-F21F-42DF-832B-330F37F2E979}"
+EndProject
+Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Sitecore.Core", "Sitecore.Core\Sitecore.Core.scproj", "{4CECF013-0E69-405A-8A36-E8E89996FEE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,16 @@ Global
 		{43AF225E-E08A-4214-A25B-3E39A036A6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43AF225E-E08A-4214-A25B-3E39A036A6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43AF225E-E08A-4214-A25B-3E39A036A6CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE11A3D-F21F-42DF-832B-330F37F2E979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE11A3D-F21F-42DF-832B-330F37F2E979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE11A3D-F21F-42DF-832B-330F37F2E979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE11A3D-F21F-42DF-832B-330F37F2E979}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CECF013-0E69-405A-8A36-E8E89996FEE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CECF013-0E69-405A-8A36-E8E89996FEE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CECF013-0E69-405A-8A36-E8E89996FEE6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4CECF013-0E69-405A-8A36-E8E89996FEE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CECF013-0E69-405A-8A36-E8E89996FEE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CECF013-0E69-405A-8A36-E8E89996FEE6}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

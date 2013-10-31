@@ -12,7 +12,14 @@ namespace SitecoreExtension.ImageCrunch.Pipelines
 
             foreach (Item uploadedItem in args.UploadedItems)
             {
-                CrunchImage.ProcessMediaItem(uploadedItem);
+                try
+                {
+                    CrunchImage.ProcessMediaItem(uploadedItem);
+                }
+                catch (System.Exception exception)
+                {
+                    Log.Error(string.Format("Could not shrink item {0}", uploadedItem.Paths.FullPath), exception, this);
+                }
             }
         }
     }
