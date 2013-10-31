@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 using SitecoreExtension.ImageCrunch.SmushIt.Responses;
@@ -20,7 +21,18 @@ namespace SitecoreExtension.ImageCrunch.SmushIt
             SmushItResponse jsonResult = null;
             if (postAsync.IsSuccessStatusCode)
             {
-                jsonResult = postAsync.Content.ReadAsAsync<SmushItResponse>().Result;
+                string stringResult = postAsync.Content.ReadAsStringAsync().Result;
+
+                var dynamicResut = JsonValue.Parse(stringResult);
+
+                if (!dynamicResut.ContainsKey("error"))
+                {
+                    jsonResult = postAsync.Content.ReadAsAsync<SmushItResponse>().Result;
+                }
+                else
+                {
+                    throw new Exception(string.Format("Error: {0}", dynamicResut.GetValue("error").ReadAs<string>()));
+                }
             }
             else
             {

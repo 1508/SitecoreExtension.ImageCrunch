@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Resources.Media;
@@ -20,12 +21,15 @@ namespace SitecoreExtension.ImageCrunch
                 }
 
                 var mediaStream = mediaItem.GetMediaStream();
-                SmushItResponse result = SmushIt.SmushItRequest.SmushIt(mediaStream);
+                SmushItResponse result;
+
+                result = SmushIt.SmushItRequest.SmushIt(mediaStream);
+
 
                 if (result == null)
                 {
                     Log.Error(string.Format("Could not shrink media file {0}", mediaItem.InnerItem.Paths.Path), typeof(CrunchImage));
-                    return;
+                    throw new Exception(string.Format("Could not shrink media file {0}", mediaItem.InnerItem.Paths.Path));
                 }
 
                 Sitecore.Resources.Media.Media media = MediaManager.GetMedia(mediaItem);
