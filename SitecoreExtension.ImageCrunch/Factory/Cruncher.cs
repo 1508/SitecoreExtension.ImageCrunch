@@ -11,9 +11,9 @@ namespace SitecoreExtension.ImageCrunch.Factory
     public abstract class Cruncher : ICruncher
     {
 
-        public static Cruncher GetCruncher()
+        public static ICruncher GetCruncher()
         {
-            var providerObject = (Cruncher)Sitecore.Configuration.Settings.GetProviderObject("ImageCruncher", typeof(Cruncher));
+            var providerObject = (ICruncher)Sitecore.Configuration.Settings.GetProviderObject("ImageCruncher", typeof(ICruncher));
 
             
             return providerObject;

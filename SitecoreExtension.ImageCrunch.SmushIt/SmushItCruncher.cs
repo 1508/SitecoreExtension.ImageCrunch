@@ -2,10 +2,8 @@
 using System.IO;
 using System.Json;
 using System.Net.Http;
-using System.Threading.Tasks;
 using SitecoreExtension.ImageCrunch.Entities;
 using SitecoreExtension.ImageCrunch.Interfaces;
-using SitecoreExtension.ImageCrunch.SmushIt.Responses;
 
 namespace SitecoreExtension.ImageCrunch.SmushIt
 {

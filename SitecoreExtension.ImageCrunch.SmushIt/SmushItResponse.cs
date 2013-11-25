@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace SitecoreExtension.ImageCrunch.SmushIt.Responses
+namespace SitecoreExtension.ImageCrunch.SmushIt
 {
     [DataContract]
     public class SmushItResponse

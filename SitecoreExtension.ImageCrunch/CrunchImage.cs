@@ -18,7 +18,7 @@ namespace SitecoreExtension.ImageCrunch
             if (mediaItem.MimeType == "image/jpeg" || mediaItem.MimeType == "image/pjpeg" ||
                mediaItem.MimeType == "image/gif" || mediaItem.MimeType == "image/png")
             {
-                Cruncher cruncher = Cruncher.GetCruncher();
+                ICruncher cruncher = Cruncher.GetCruncher();
 
                 if (cruncher == null)
                 {
