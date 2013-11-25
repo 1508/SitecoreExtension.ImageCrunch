@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace SitecoreExtension.ImageCrunch.SmushIt.Entities
+namespace SitecoreExtension.ImageCrunch.Entities
 {
-    public class SmushItResponse
+    public class CrunchResult
     {
         public string Format { get; set; }
 

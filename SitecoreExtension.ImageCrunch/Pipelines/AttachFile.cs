@@ -3,7 +3,6 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Pipelines.Attach;
 using Sitecore.Resources.Media;
-using SitecoreExtension.ImageCrunch.SmushIt.Entities;
 
 namespace SitecoreExtension.ImageCrunch.Pipelines
 {

@@ -3,27 +3,39 @@ using System.IO;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Resources.Media;
-using SitecoreExtension.ImageCrunch.SmushIt.Entities;
+using SitecoreExtension.ImageCrunch.Entities;
+using SitecoreExtension.ImageCrunch.Factory;
+using SitecoreExtension.ImageCrunch.Interfaces;
 
 namespace SitecoreExtension.ImageCrunch
 {
     public class CrunchImage
     {
+        
+
         public static void ProcessMediaItem(MediaItem mediaItem)
         {
             if (mediaItem.MimeType == "image/jpeg" || mediaItem.MimeType == "image/pjpeg" ||
                mediaItem.MimeType == "image/gif" || mediaItem.MimeType == "image/png")
             {
+                Cruncher cruncher = Cruncher.GetCruncher();
 
-                if (mediaItem.Size >= 1048576)
+                if (cruncher == null)
+                {
+                    Log.Error("Could not find cruncher!", typeof(CrunchImage));
+                    return;
+                }
+
+                if (mediaItem.Size >= cruncher.MaxImageSize)
                 {
                     return;
                 }
 
                 var mediaStream = mediaItem.GetMediaStream();
-                SmushItResponse result;
 
-                result = SmushIt.SmushItRequest.SmushIt(mediaStream);
+
+
+                var result = cruncher.CrunchStream(mediaStream);
 
 
                 if (result == null)

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SitecoreExtension.ImageCrunch.SmushIt.Entities;
+using SitecoreExtension.ImageCrunch.Entities;
 
 namespace SitecoreExtension.ImageCrunch.SmushIt.Tests
 {
@@ -24,7 +24,9 @@ namespace SitecoreExtension.ImageCrunch.SmushIt.Tests
                 var memoryStream = new MemoryStream();
                 stream.CopyTo(memoryStream);
                 memoryStream.Position = 0;
-                SmushItResponse request = SmushIt.SmushItRequest.SmushIt(memoryStream);
+                var cruncher = new SmushItCruncher();
+
+                CrunchResult request = cruncher.CrunchStream(memoryStream);
 
             }
                        

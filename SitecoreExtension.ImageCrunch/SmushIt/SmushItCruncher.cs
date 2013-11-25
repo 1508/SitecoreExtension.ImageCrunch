@@ -3,14 +3,15 @@ using System.IO;
 using System.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
+using SitecoreExtension.ImageCrunch.Entities;
+using SitecoreExtension.ImageCrunch.Interfaces;
 using SitecoreExtension.ImageCrunch.SmushIt.Responses;
 
 namespace SitecoreExtension.ImageCrunch.SmushIt
 {
-    public class SmushItRequest
+    public class SmushItCruncher : ICruncher
     {
-        
-        public static Entities.SmushItResponse SmushIt(Stream stream)
+       public CrunchResult CrunchStream(Stream stream)
         {
             var client = new HttpClient();
             var content = new MultipartFormDataContent();
@@ -48,11 +49,19 @@ namespace SitecoreExtension.ImageCrunch.SmushIt
 
             Stream result = httpResponseMessage.Content.ReadAsStreamAsync().Result;
 
-            var smushItObject = new Entities.SmushItResponse();
+            var smushItObject = new Entities.CrunchResult();
             smushItObject.FileStream = result;
             smushItObject.Format = Path.GetExtension(jsonResult.Dest);
 
             return smushItObject;
+        }
+
+        public decimal MaxImageSize
+        {
+            get
+            {
+                return 1048576;
+            }
         }
     }
 }
