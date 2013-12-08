@@ -1,4 +1,4 @@
-Sitecore ImgeCruncher
+Sitecore ImageCrunch
 =============================
 
 This release contains a step in the upload event, where it runs images, thought a online service, that shrinks the uploaded image.
