@@ -5,6 +5,7 @@ using System.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Sitecore;
+using Sitecore.Diagnostics;
 using SitecoreExtension.ImageCrunch.Entities;
 using SitecoreExtension.ImageCrunch.Interfaces;
 
@@ -44,8 +45,8 @@ namespace SitecoreExtension.ImageCrunch.Kraken
             
             content.Add(stringContent, "woop");
             var streamContent = new StreamContent(stream);
-            streamContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-            content.Add(streamContent, "file ", "hello .jpg");
+            //streamContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+            content.Add(streamContent, "file ", "it needed a file name");
 
             HttpResponseMessage postAsync = client.PostAsync("https://api.kraken.io/v1/upload", content).Result;
 
@@ -54,15 +55,14 @@ namespace SitecoreExtension.ImageCrunch.Kraken
             {
                 string stringResult = postAsync.Content.ReadAsStringAsync().Result;
 
-                var dynamicResut = JsonValue.Parse(stringResult);
-
-                if (!dynamicResut.ContainsKey("error"))
+                var dynamicResult = JsonValue.Parse(stringResult);
+                if (dynamicResult.ContainsKey("success") && dynamicResult["success"].ReadAs(false))
                 {
                     jsonResult = postAsync.Content.ReadAsAsync<Response>().Result;
                 }
                 else
                 {
-                    throw new Exception(string.Format("Error: {0}", dynamicResut.GetValue("error").ReadAs<string>()));
+                    throw new Exception(string.Format("Error: {0}", dynamicResult.GetValue("error").ReadAs<string>()));
                 }
             }
             else
@@ -79,11 +79,11 @@ namespace SitecoreExtension.ImageCrunch.Kraken
 
             Stream result = httpResponseMessage.Content.ReadAsStreamAsync().Result;
 
-            var smushItObject = new Entities.CrunchResult();
-            smushItObject.FileStream = result;
-            smushItObject.Format = Path.GetExtension(jsonResult.Dest);
+            var returnObject = new Entities.CrunchResult();
+            returnObject.FileStream = result;
+            returnObject.Format = Path.GetExtension(jsonResult.Dest);
 
-            return smushItObject;
+            return returnObject;
         }
 
         public decimal MaxImageSize

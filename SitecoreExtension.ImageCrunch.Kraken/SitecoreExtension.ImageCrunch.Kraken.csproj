@@ -62,7 +62,7 @@
     <Compile Include="KrakenCruncher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="SmushItResponse.cs" />
+    <Compile Include="Response.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SitecoreExtension.ImageCrunch\SitecoreExtension.ImageCrunch.csproj">
