@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.CompilerServices;
+using Sitecore;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Jobs;
 using Sitecore.Resources.Media;
 using SitecoreExtension.ImageCrunch.Entities;
 using SitecoreExtension.ImageCrunch.Factory;
@@ -11,18 +14,16 @@ namespace SitecoreExtension.ImageCrunch
 {
     public class CrunchImage
     {
-        
-
         public static void ProcessMediaItem(MediaItem mediaItem)
         {
             if (mediaItem.MimeType == "image/jpeg" || mediaItem.MimeType == "image/pjpeg" ||
-               mediaItem.MimeType == "image/gif" || mediaItem.MimeType == "image/png")
+                mediaItem.MimeType == "image/gif" || mediaItem.MimeType == "image/png")
             {
                 ICruncher cruncher = Cruncher.GetCruncher();
 
                 if (cruncher == null)
                 {
-                    Log.Error("Could not find cruncher!", typeof(CrunchImage));
+                    Log.Error("Could not find cruncher!", typeof (CrunchImage));
                     return;
                 }
 
@@ -34,26 +35,37 @@ namespace SitecoreExtension.ImageCrunch
                 var mediaStream = mediaItem.GetMediaStream();
 
 
-
-                var result = cruncher.CrunchStream(mediaStream);
-
-
-                if (result == null)
+                try
                 {
-                    Log.Error(string.Format("Could not shrink media file {0}", mediaItem.InnerItem.Paths.Path), typeof(CrunchImage));
-                    throw new Exception(string.Format("Could not shrink media file {0}", mediaItem.InnerItem.Paths.Path));
+                    CrunchResult result = cruncher.CrunchStream(mediaStream);
+                    if (result == null)
+                    {
+                        Log.Error(string.Format("Could not shrink media file {0}", mediaItem.InnerItem.Paths.Path),
+                            typeof (CrunchImage));
+                    }
+
+                    Sitecore.Resources.Media.Media media = MediaManager.GetMedia(mediaItem);
+
+                    using (var stream = new MemoryStream())
+                    {
+                        result.FileStream.CopyTo(stream);
+
+                        stream.Position = 0;
+                        media.SetStream(stream, Path.GetExtension(result.Format).TrimStart('.'));
+                    }
                 }
-
-                Sitecore.Resources.Media.Media media = MediaManager.GetMedia(mediaItem);
-
-                using (var stream = new MemoryStream())
+                catch (Exception exception)
                 {
-                    result.FileStream.CopyTo(stream);
+                    Job job = Context.Job;
 
-                    stream.Position = 0;
-                    media.SetStream(stream, Path.GetExtension(result.Format).TrimStart('.'));
+                    if (job != null)
+                    {
+                        job.Status.LogError("Image could not be reduced in size");
+                    }
+
+                    Log.Error(string.Format("Image crunch failed: {0}", mediaItem.InnerItem.Paths.FullPath), exception,
+                        (typeof (CrunchImage)));
                 }
-
             }
         }
     }
